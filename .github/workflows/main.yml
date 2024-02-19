@@ -33,6 +33,8 @@ jobs:
       run: |
         # Downloading and extracting necessary files
         wget https://github.com/Ping-1/RepackAP/blob/main/v5_super_repacker.zip
+        wget https://github.com/VeloshGSIs/Super_Guide/blob/master/lpunpack
+        wget https://github.com/VeloshGSIs/Super_Guide/blob/master/imjtool
         unzip v5_super_repacker.zip
         rm -r v5_super_repacker.zip
 
@@ -47,10 +49,12 @@ jobs:
     - name: Downloading given system.img
       run: |
         wget ${{ github.event.inputs.System }} 
-    - name: Converting
+
+    - name: Integrating
       run: |
-        
-        ./down
+        unzip ap.zip
+        sudo ./imjtool super.img extract
+        sudo ./lpunpack super.ext4.img
 
     - name: Rename file
       run: mv ./last/EXT4_RW_AP.zip ./last/${{ github.event.inputs.Firmware }}.zip

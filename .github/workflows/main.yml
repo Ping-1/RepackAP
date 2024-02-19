@@ -1,4 +1,4 @@
-name: Samsung EROFS to EXT4
+name: RepackAP
 on:
   push:
     branches:
@@ -59,13 +59,15 @@ jobs:
 
     - name: Downloading given system.img
       run: |
-        wget ${{ github.event.inputs.System }} 
+        wget -O system.img ${{ github.event.inputs.System }} 
 
     - name: Integrating
       run: |
         unzip ap.zip
-        sudo ./imjtool super.img extract
-        sudo ./lpunpack super.ext4.img
+        lz4 -d super.img.lz4 super.img
+        sudo simg2img super.img super.raw
+        imjtool.ELF64 super.raw extract
+        rm -r system.img
 
     - name: Rename file
       run: mv ./last/EXT4_RW_AP.zip ./last/${{ github.event.inputs.Firmware }}.zip

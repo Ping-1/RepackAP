@@ -27,14 +27,25 @@ jobs:
       run: |
         sudo apt update
         sudo apt install -y cpio bc simg2img lz4 git device-tree-compiler lz4 xz-utils zlib1g-dev openjdk-17-jdk gcc g++ python3 python-is-python3 p7zip-full android-sdk-libsparse-utils erofs-utils
-        sudo apt install -y zip xz-utils unzip p7zip-full wget
+        sudo apt install -y zip xz-utils unzip p7zip-full wget 
         
     - name: Preparing Files
       run: |
         # Downloading and extracting necessary files
-        wget https://github.com/Ping-1/RepackAP/blob/main/v5_super_repacker.zip
-        wget https://github.com/VeloshGSIs/Super_Guide/blob/master/lpunpack
-        wget https://github.com/VeloshGSIs/Super_Guide/blob/master/imjtool
+        #wget https://github.com/Ping-1/RepackAP/blob/main/v5_super_repacker.zip
+        #wget https://github.com/VeloshGSIs/Super_Guide/blob/master/lpunpack
+        #wget https://github.com/VeloshGSIs/Super_Guide/blob/master/imjtool
+        wget newandroidbook.com/tools/imjtool.tgz
+        mkdir ./imjtool_tmp
+        tar -xf imjtool.tgz -C ./imjtool_tmp
+        cp ./imjtool_tmp/imjtool.ELF64 ./imjtool
+        rm -rf ./imjtool_tmp imjtool.tgz
+        sudo apt install clang zlib1g-dev
+        git clone https://github.com/LonelyFool/lpunpack_and_lpmake.git
+        cd lpunpack_and_lpmake/ && ./make.sh && cd ..
+        cp ./lpunpack_and_lpmake/bin/lpunpack ./
+        cp ./lpunpack_and_lpmake/bin/lpmake ./
+        rm -rf ./lpunpack_and_lpmake
         unzip v5_super_repacker.zip
         rm -r v5_super_repacker.zip
 

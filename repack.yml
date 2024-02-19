@@ -32,17 +32,17 @@ jobs:
     - name: Preparing Files
       run: |
         # Downloading and extracting necessary files
-        wget https://sourceforge.net/projects/samsung-galaxy-a01-m01/files/erofs_ext4.zip
-        unzip erofs_ext4.zip
-        rm -r erofs_ext4.zip
+        wget https://github.com/Ping-1/RepackAP/blob/main/v5_super_repacker.zip
+        unzip v5_super_repacker.zip
+        rm -r v5_super_repacker.zip
 
     - name: Downloading given firmware
       run: |
         # Downloading Stock rom
         wget -O ap.zip ${{ github.event.inputs.GSI }} 
-        chmod +x *
-        chmod 755 bin/*
-        chmod 755 aik/bin/*
+        #chmod +x *
+        #chmod 755 bin/*
+        #chmod 755 aik/bin/*
         
     - name: Converting
       run: |

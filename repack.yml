@@ -8,12 +8,12 @@ on:
       GSI:
         description: 'Samfw Link For AP'
         required: true
-        default: ' AP LINK FROM SAMFW'
+        default: 'AP LINK'
       
-      Firmware:
-        description: 'Firmware version'
+      System.img:
+        description: 'GSI system.img'
         required: true
-        default: 'EG - :A055FXXU2AWK1'
+        default: 'Link to system.img'
 
 jobs:
   Build:

@@ -10,7 +10,7 @@ on:
         required: true
         default: 'AP LINK'
       
-      System.img:
+      System:
         description: 'GSI system.img'
         required: true
         default: 'Link to system.img'
@@ -43,7 +43,10 @@ jobs:
         #chmod +x *
         #chmod 755 bin/*
         #chmod 755 aik/bin/*
-        
+
+    - name: Downloading given system.img
+      run: |
+        wget ${{ github.event.inputs.System }} 
     - name: Converting
       run: |
         

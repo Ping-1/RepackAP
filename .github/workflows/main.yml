@@ -64,7 +64,7 @@ jobs:
     - name: Integrating
       run: |
         unzip ap.zip
-        lz4 -d super.img.lz4 super.img
+        #lz4 -d super.img.lz4 super.img
         sudo simg2img super.img superraw.img
         imjtool.ELF64 superraw.img extract
         rm -r system.img

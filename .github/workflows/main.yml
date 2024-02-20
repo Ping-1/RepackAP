@@ -79,7 +79,7 @@ jobs:
         product_size=$(stat -c "%s" "$product_path")
         vendor_size=$(stat -c "%s" "$vendor_path")
         odm_size=$(stat -c "%s" "$odm_path")
-        lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$size_super --group main:$sum --partition system:readonly:$system_size:main --image system=$system_path --partition vendor:readonly:$vendor_size:main --image vendor=$vendor_path --partition product:readonly:$product_size:main --image product=$product_path --partition odm:readonly:$odm_size:main --image odm=$odm_path --sparse --output ./super.new.img
+        lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$super_size --group main:$sum --partition system:readonly:$system_size:main --image system=$system_path --partition vendor:readonly:$vendor_size:main --image vendor=$vendor_path --partition product:readonly:$product_size:main --image product=$product_path --partition odm:readonly:$odm_size:main --image odm=$odm_path --sparse --output ./super.new.img
          mv super.new.img super.img
          tar -cfv repackap.tar boot.img.lz4 vbmeta.img.lz4 super.img
          zip repackap.zip -r ./*

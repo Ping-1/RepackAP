@@ -69,10 +69,12 @@ jobs:
         imjtool.ELF64 superraw.img extract
         rm -r system.img
         mv ./gsi.img ./system.img
+        super_path="super.img"
         system_path="system.img"
         odm_path="odm.img"
         vendor_path="vendor.img"
         product_path="product.img"
+        super_size=$(stat -c "%s" "$super_path")
         system_size=$(stat -c "%s" "$system_path")
         product_size=$(stat -c "%s" "$product_path")
         vendor_size=$(stat -c "%s" "$vendor_path")

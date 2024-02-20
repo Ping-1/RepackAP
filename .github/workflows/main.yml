@@ -65,17 +65,32 @@ jobs:
       run: |
         unzip ap.zip
         lz4 -d super.img.lz4 super.img
-        sudo simg2img super.img super.raw
-        imjtool.ELF64 super.raw extract
+        sudo simg2img super.img superraw.img
+        imjtool.ELF64 superraw.img extract
         rm -r system.img
-        mv gsi.img system.img
+        mv ./gsi.img ./system.img
+        system_path="system.img"
+        odm_path="odm.img"
+        vendor_path="vendor.img"
+        product_path="product.img"
+        system_size=$(stat -c "%s" "$system_path")
+        product_size=$(stat -c "%s" "$product_path")
+        vendor_size=$(stat -c "%s" "$vendor_path")
+        odm_size=$(stat -c "%s" "$odm_path")
+        lpmake --metadata-size 65536 --super-name super --metadata-slots 2 --device super:$size_super --group main:$sum --partition system:readonly:$system_size:main --image system=$system_path --partition vendor:readonly:$vendor_size:main --image vendor=$vendor_path --partition product:readonly:$product_size:main --image product=$product_path --partition odm:readonly:$odm_size:main --image odm=$odm_path --sparse --output ./super.new.img
+         mv super.new.img super.img
+         tar -cfv repackap.tar boot.img.lz4 vbmeta.img.lz4 super.img
+         zip repackap.zip -r ./*
         
 
-    - name: Rename file
-      run: mv ./last/EXT4_RW_AP.zip ./last/${{ github.event.inputs.Firmware }}.zip
+#    - name: Rename file
+#      run: mv ./last/#EXT4_RW_system_path="out_ext4/system.new.img"
+#odm_path="out_ext4/odm.new.img"
+#vendor_path="out_ext4/vendor.new.img"
+#product_path="out_ext4/#product.new.img"AP.zip ./last/${{ github.event.inputs.Firmware }}.zip
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: EXT4_RW_AP
-        path: ./last/${{ github.event.inputs.Firmware }}.zip
+        name: RepackAP
+        path: ./last/repackap.zip

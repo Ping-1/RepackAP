@@ -59,7 +59,7 @@ jobs:
 
     - name: Downloading given system.img
       run: |
-        wget -O system.img ${{ github.event.inputs.System }} 
+        wget -O gsi.img ${{ github.event.inputs.System }} 
 
     - name: Integrating
       run: |
@@ -68,6 +68,8 @@ jobs:
         sudo simg2img super.img super.raw
         imjtool.ELF64 super.raw extract
         rm -r system.img
+        mv gsi.img system.img
+        
 
     - name: Rename file
       run: mv ./last/EXT4_RW_AP.zip ./last/${{ github.event.inputs.Firmware }}.zip
